@@ -1,0 +1,24 @@
+.app-container {
+  background: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.static-container {
+  background-color: #f0f0f0;
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.App {
+  text-align: center;
+}

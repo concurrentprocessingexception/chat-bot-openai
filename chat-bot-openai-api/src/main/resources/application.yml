@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: OpenAI Chat Bot
+  main:
+    allow-circular-references: true
+  ai:
+    openai:
+      api-key: YOUR_API_KEY
+      chat:
+        base-url: https://api.openai.com/v1/chat/completions
+        model: gpt-3.5-turbo
+        temperature: 0.0 #default 0.8
+logging:
+  level:
+    root: INFO
+    br:
+      example:
+        genai:
+          chatbot:
+            openai:
+              app: INFO

@@ -1,0 +1,27 @@
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+# User-specific stuff
+.idea/**/
+**/.idea/**/
+
+# IntelliJ
+out/
+**/out/
+**/out/**
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+**/.idea_modules/
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+**/node_modules/
+**/jspm_packages/
+
+**/.mvn/
+
+**/mvnw
+**/mvnw.cmd
