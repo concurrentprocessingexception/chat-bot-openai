@@ -4,13 +4,13 @@ import br.example.genai.chatbot.openai.app.exception.AppException;
 import br.example.genai.chatbot.openai.app.model.ChatRequest;
 import br.example.genai.chatbot.openai.app.model.ChatResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.chat.Generation;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
-import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -27,15 +27,17 @@ public class GenAiService {
     protected Resource systemPrompt;
 
     @Autowired
-    private OpenAiChatClient openAiChatClient;
+    private ChatClient chatClient;
 
     public ChatResponse handleRequest(ChatRequest chatRequest) {
         log.info("ChatService::sendMessage START");
         try {
             Prompt prompt = createPromptForChat(chatRequest);
 
+            org.springframework.ai.chat.model.ChatResponse chatResponse = chatClient.prompt(prompt)
+                    .call()
+                    .chatResponse();
 
-            org.springframework.ai.chat.ChatResponse chatResponse = openAiChatClient.call(prompt);
             log.debug("Chat Response : {}", chatResponse);
 
             return parseAiResponse(chatResponse);
@@ -47,13 +49,13 @@ public class GenAiService {
         }
     }
 
-    private ChatResponse parseAiResponse(org.springframework.ai.chat.ChatResponse chatResponse) {
+    private ChatResponse parseAiResponse(org.springframework.ai.chat.model.ChatResponse chatResponse) {
 
         String responseStr = null;
         if (null != chatResponse) {
             List<Generation> generations = chatResponse.getResults();
             log.debug("Number of generation from chat client : {}", generations.size());
-            responseStr = generations.get(0).getOutput().getContent();
+            responseStr = generations.get(0).getOutput().getText();
         }
         return new ChatResponse(responseStr);
     }
@@ -85,7 +87,7 @@ public class GenAiService {
         log.debug("Creating system message...");
         try {
             String history = historyMessages.stream()
-                    .map(m -> m.getMessageType().name().toLowerCase() + ": " + m.getContent())
+                    .map(m -> m.getMessageType().name().toLowerCase() + ": " + m.getText())
                     .collect(Collectors.joining(System.lineSeparator()));
 
             return new SystemPromptTemplate(this.systemPrompt)

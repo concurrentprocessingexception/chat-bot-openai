@@ -1,6 +1,7 @@
 package br.example.genai.chatbot.openai.app.config;
 
-import org.springframework.ai.openai.OpenAiChatClient;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -12,13 +13,12 @@ public class AppConfig {
     private String apiKey;
 
     @Bean
-    public OpenAiApi openAiApi() {
-        return new OpenAiApi(apiKey);
+    public ChatClient chatClient() {
+        return ChatClient.builder(OpenAiChatModel.builder()
+                        .openAiApi(OpenAiApi.builder()
+                                .apiKey(apiKey)
+                                .build())
+                        .build())
+                .build();
     }
-
-    @Bean
-    public OpenAiChatClient openAiChatClient() {
-        return new OpenAiChatClient(openAiApi());
-    }
-
 }
