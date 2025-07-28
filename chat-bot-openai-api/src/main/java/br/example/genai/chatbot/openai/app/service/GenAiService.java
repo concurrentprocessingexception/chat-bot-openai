@@ -1,8 +1,10 @@
 package br.example.genai.chatbot.openai.app.service;
 
+import br.example.genai.chatbot.openai.app.constants.AppConstants;
 import br.example.genai.chatbot.openai.app.exception.AppException;
 import br.example.genai.chatbot.openai.app.model.ChatRequest;
 import br.example.genai.chatbot.openai.app.model.ChatResponse;
+import br.example.genai.chatbot.openai.app.tool.ShipmentLookupTool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.AssistantMessage;
@@ -29,12 +31,16 @@ public class GenAiService {
     @Autowired
     private ChatClient chatClient;
 
+    @Autowired
+    private ShipmentLookupTool shipmentLookupTool;
+
     public ChatResponse handleRequest(ChatRequest chatRequest) {
         log.info("ChatService::sendMessage START");
         try {
             Prompt prompt = createPromptForChat(chatRequest);
 
             org.springframework.ai.chat.model.ChatResponse chatResponse = chatClient.prompt(prompt)
+                    .tools(shipmentLookupTool)
                     .call()
                     .chatResponse();
 
@@ -64,7 +70,7 @@ public class GenAiService {
         log.debug("Creating prompt...");
 
         List<Message> messages = chatRequest.getHistory().stream().map(m -> {
-            if("AI".equals(m.getFrom())) {
+            if(AppConstants.AI.equals(m.getFrom())) {
                 return new AssistantMessage(m.getMessage());
             } else {
                 return new UserMessage(m.getMessage());
