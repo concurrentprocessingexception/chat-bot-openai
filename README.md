@@ -12,7 +12,11 @@ It consists of two modules
 
 A spring boot REST api, which exposes a single endpoint which is called from the UI application.
 
-You need to replace YOUR\_API\_KEY in application.yml file with your own Open AI API KEY.
+You need to replace below configuration in application.yml for the application to work. 
+* NEO4J_DB_URL
+* NEO4J_DB_USERNAME
+* NEO4J_DB_PASSWORD
+* OPENAI_API_KEY
 
 ### How to run?
 **This will require a docker runtime on your machine.**
