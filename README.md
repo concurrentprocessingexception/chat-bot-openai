@@ -14,11 +14,34 @@ A spring boot REST api, which exposes a single endpoint which is called from the
 
 You need to replace YOUR\_API\_KEY in application.yml file with your own Open AI API KEY.
 
+### How to run?
+**This will require a docker runtime on your machine.**
+1. go to project root directory on the command line and run the following command
+    ```
+    docker build -t chat-bot-openai-api .
+    ```
+2. Run the folowing command. 
+    ```
+    docker run -p 8080:8080 chat-bot-openai-api
+    ```
 ## chat-bot-openai-external-api
 
 A spring boot REST api, which exposes a single endpoint. This api will act as a external api which will provides dummy shipment information. This api will be used by chatbot in the function calling use-case.
-
+### How to run?
+**This will require a docker runtime on your machine.**
+1. go to project root directory on the command line and run the following command
+    ```
+    docker build -t chat-bot-openai-external-api .
+    ```
+2. Run the folowing command. 
+    ```
+    docker run -p 8081:8081 chat-bot-openai-external-api
+    ```
 ## chat-bot-openai-ui
 
 A react SPA with a chatbox window which interacts with chat-bot-open-api REST service.
-
+### How to run?
+**This will require node installed on your machine**
+```
+npm start
+```
