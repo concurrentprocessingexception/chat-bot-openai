@@ -5,4 +5,8 @@ public interface AppConstants {
     String OPEN_AI = "openai";
 
     String AI = "AI";
+
+    String API = "API";
+
+    String QnA = "QnA";
 }

@@ -2,6 +2,7 @@ import './App.css';
 import Chat from './Chat';
 import Header from './Header';
 import Footer from './Footer';
+import FileUpload from './FileUpload';
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <Header />
       <div className="app-container">
         <div className="static-container">
-          Some Fancy Component
+          <FileUpload />
         </div>
         <div className="static-container">
           

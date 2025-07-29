@@ -14,12 +14,26 @@ public class AppConfig {
     @Value("${spring.ai.openai.api-key}")
     private String apiKey;
 
+    @Value("${spring.neo4j.uri}")
+    private String neo4jUri;
+
+    @Value("${spring.neo4j.authentication.username}")
+    private String neo4jUsername;
+
+    @Value("${spring.neo4j.authentication.password}")
+    private String neo4jPassword;
+
+    @Bean
+    public OpenAiApi openAiApi() {
+        return OpenAiApi.builder()
+                .apiKey(apiKey)
+                .build();
+    }
+
     @Bean
     public ChatClient chatClient() {
         return ChatClient.builder(OpenAiChatModel.builder()
-                        .openAiApi(OpenAiApi.builder()
-                                .apiKey(apiKey)
-                                .build())
+                        .openAiApi(openAiApi())
                         .build())
                 .build();
     }

@@ -23,18 +23,20 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<!-- Vector Store for RAG
+		<!-- Vector Store for RAG -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-advisors-vector-store</artifactId>
 		</dependency>
-		-->
-		<!-- Neo4j Vector Store
+		<!-- Neo4j Vector Store -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-starter-vector-store-neo4j</artifactId>
 		</dependency>
-		-->
+		<dependency>
+			<groupId>org.neo4j.driver</groupId>
+			<artifactId>neo4j-java-driver</artifactId>
+		</dependency>
 		<!-- Open AI LLM -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
